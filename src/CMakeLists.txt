@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.5)
+cmake_minimum_required(VERSION 3.5...3.31)
 
 project(ntest)
 
@@ -46,6 +46,11 @@ target_link_libraries(randomEvalGen mainlib core game patterns odk n64)
 add_test(ntest_basic ntest o)
 
 if(${UNIX})
-    EXEC_PROGRAM(ln ARGS -sf "../src/resource/*"
-                 "${CMAKE_BINARY_DIR}")
+    file(GLOB RESOURCE_FILES "${CMAKE_SOURCE_DIR}/resource/*")
+    foreach(RESOURCE_FILE ${RESOURCE_FILES})
+        get_filename_component(RESOURCE_NAME "${RESOURCE_FILE}" NAME)
+        execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink
+                        "${RESOURCE_FILE}"
+                        "${CMAKE_BINARY_DIR}/${RESOURCE_NAME}")
+    endforeach()
 endif()
