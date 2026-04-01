@@ -9,7 +9,7 @@
 *.dep
 
 # Local ntest files
-*.book
+# *.book files are tracked by Git LFS (see .gitattributes)
 float coefficients.zip
 [Bb]uildLog.htm
 *.exe
